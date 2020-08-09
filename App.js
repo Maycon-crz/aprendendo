@@ -100,4 +100,5 @@ const MeuApp = () =>{
     </ScrollView>
   );
 }
+//Parei no Docs - State - useState
 export default MeuApp;
