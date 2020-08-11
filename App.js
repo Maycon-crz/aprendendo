@@ -1,58 +1,147 @@
-//Parei no Responding to the current animation value
-//-------------------Animated--------------------
-import React, { useRef } from "react";
-import { Animated, View, StyleSheet, PanResponder, Text } from "react-native";
+//Parei DOCS e fui para (componentes)
+//-------------------VirtualizedList-------------------
+import React from 'react';
+import { SafeAreaView, View, VirtualizedList, StyleSheet, Text } from 'react-native';
+import Constants from 'expo-constants';
 
-const App = () => {
-  const pan = useRef(new Animated.ValueXY()).current;
-  const panResponder = useRef(
-    PanResponder.create({
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderMove: Animated.event([
-        null,
-        { dx: pan.x, dy: pan.y }
-      ]),
-      onPanResponderRelease: () => {
-        Animated.spring(pan, { toValue: { x: 0, y: 0 } }).start();
-      }
-    })
-  ).current;
+const DATA = [];
 
+const getItem = (data, index) => {
+  return {
+    id: Math.random().toString(12).substring(0),
+    title: `Item ${index+1}`
+  }
+}
+
+const getItemCount = (data) => {
+  return 50;
+}
+
+const Item = ({ title })=> {
   return (
-    <View style={styles.container}>
-      <Text style={styles.titleText}>Drag & Release this box!</Text>
-      <Animated.View
-        style={{
-          transform: [{ translateX: pan.x }, { translateY: pan.y }]
-        }}
-        {...panResponder.panHandlers}
-      >
-        <View style={styles.box} />
-      </Animated.View>
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
     </View>
+  );
+}
+
+const VirtualizedListExample = () => {
+  return (
+    <SafeAreaView style={styles.container}>
+      <VirtualizedList
+        data={DATA}
+        initialNumToRender={4}
+        renderItem={({ item }) => <Item title={item.title} />}
+        keyExtractor={item => item.key}
+        getItemCount={getItemCount}
+        getItem={getItem}
+      />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
+    marginTop: Constants.statusBarHeight,
   },
-  titleText: {
-    fontSize: 14,
-    lineHeight: 24,
-    fontWeight: "bold"
-  },
-  box: {
+  item: {
+    backgroundColor: '#f9c2ff',
     height: 150,
-    width: 150,
-    backgroundColor: "blue",
-    borderRadius: 5
-  }
+    justifyContent: 'center',
+    marginVertical: 8,
+    marginHorizontal: 16,
+    padding: 20,
+  },
+  title: {
+    fontSize: 32,
+  },
 });
 
-export default App;
+export default VirtualizedListExample;
+//-------------------View-------------------
+// import React from "react";
+// import {View, Text} from "react-native";
+
+// const ViewCaixas = () => {
+//   return (
+//     <View style={{
+//       flexDirection: "row",
+//       height:100,
+//       padding: 20
+//     }}
+//     >
+//       <View style={{backgroundColor:"blue", flex:0.3}}/>
+//       <View style={{backgroundColor:"red", flex:0.5}}/>
+//       <Text>Olá Mundo!!!</Text>
+//     </View>
+//   )
+// }
+// export default ViewCaixas;
+
+//Parei no Responding to the current animation value (DOCS)
+//-------------------Animated--------------------
+//  
+
+
+//-------------------
+
+// import React, { useRef } from "react";
+// import { Animated, View, StyleSheet, PanResponder, Text } from "react-native";
+
+// const App = () => {
+//   const pan = useRef(new Animated.ValueXY()).current;
+//   const panResponder = useRef(
+//     PanResponder.create({
+//       onMoveShouldSetPanResponder: () => true, 
+//       onPanResponderMove: Animated.event([
+//         null,
+//         { dx: pan.x, dy: pan.y }
+//       ]),
+//       onPanResponderRelease: () => {
+//         Animated.spring(pan, { toValue: { x: 0, y: 0 } }).start();
+//       }
+//     })
+//   ).current;
+
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.titleText}>Drag & Release this box!</Text>
+//       <Animated.View
+//         style={{
+//           transform: [{ translateX: pan.x }, { translateY: pan.y }]
+//         }}
+//         {...panResponder.panHandlers}
+//       >
+//         <View style={styles.box} />
+//       </Animated.View>
+//     </View>
+//   );
+// }
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     alignItems: "center",
+//     justifyContent: "center"
+//   },
+//   titleText: {
+//     fontSize: 14,
+//     lineHeight: 24,
+//     fontWeight: "bold"
+//   },
+//   box: {
+//     height: 150,
+//     width: 150,
+//     backgroundColor: "blue",
+//     borderRadius: 5
+//   }
+// });
+
+// export default App;
+
+//-------------------
+
 // import React, { useRef, useEffect } from 'react';
 // import { Animated, Text, View } from 'react-native';
 
